@@ -42,25 +42,22 @@ bool CefV8HandlerImpl::Execute(const CefString& name,	//JavaScriptµ÷ÓÃµÄC++·½·¨Ã
 		if (arguments.size() == 2
 			&& arguments[0]->IsString()
 			&& arguments[1]->IsString())
-		{
-			if (arguments[0]->GetStringValue() == "MSG_SEARCH_FINISH")
-			{
-				//½«ÏûÏ¢·¢ËÍ¸øBrowser½ø³Ì
-				CefRefPtr<CefProcessMessage> msg = CefProcessMessage::Create("MSG_SEARCH_FINISH");
-				// Retrieve the argument list object.
-				CefRefPtr<CefListValue> args = msg->GetArgumentList();
-				// Populate the argument values.
-				args->SetSize(2);
-				args->SetString(0, arguments[0]->GetStringValue());
-				args->SetString(1, arguments[1]->GetStringValue());
+		{			
+			//½«ÏûÏ¢·¢ËÍ¸øBrowser½ø³Ì
+			CefRefPtr<CefProcessMessage> msg = CefProcessMessage::Create("sendMessage");
+			// Retrieve the argument list object.
+			CefRefPtr<CefListValue> args = msg->GetArgumentList();
+			// Populate the argument values.
+			args->SetSize(2);
+			args->SetString(0, arguments[0]->GetStringValue());
+			args->SetString(1, arguments[1]->GetStringValue());
 
-				// Send the process message to the browser process.
-				CefV8Context::GetCurrentContext()->GetBrowser()->SendProcessMessage(PID_BROWSER, msg);
+			// Send the process message to the browser process.
+			CefV8Context::GetCurrentContext()->GetBrowser()->SendProcessMessage(PID_BROWSER, msg);
 
-				retval = CefV8Value::CreateInt(0);
+			retval = CefV8Value::CreateInt(0);
 
-				handle = true;							
-			}
+			handle = true;			
 		}		
 	}
 
@@ -119,7 +116,7 @@ bool CefV8HandlerImpl::CallJsFunction(CefRefPtr<CefBrowser> browser, CefRefPtr<C
 	CefV8ValueList arguments;
 
 	// First argument is the message name.
-	arguments.push_back(CefV8Value::CreateString(message_name));
+	//arguments.push_back(CefV8Value::CreateString(message_name));
 
 	// Second argument is the message arguments.
 	arguments.push_back(CefV8Value::CreateString(args->GetString(1)));

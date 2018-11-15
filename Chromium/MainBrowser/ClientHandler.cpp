@@ -55,7 +55,7 @@ ClientHandler::~ClientHandler()
 bool ClientHandler::OnProcessMessageReceived(CefRefPtr<CefBrowser> browser, CefProcessId source_process, CefRefPtr<CefProcessMessage> message)
 {
 	const CefString& messageName = message->GetName();
-	if (messageName == "MSG_SEARCH_FINISH")
+	if (messageName == "sendMessage")
 	{
 		CefRefPtr<CefListValue> args = message->GetArgumentList();
 		if (args->GetSize() >= 2
