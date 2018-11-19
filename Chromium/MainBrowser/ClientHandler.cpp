@@ -5,13 +5,14 @@
 #include "include/wrapper/cef_helpers.h"
 
 #include "sRPC/sRPC.h"
+
 namespace {
 
-	ClientHandler* g_instance = NULL;
+	CefRefPtr<ClientHandler> g_instance = new ClientHandler;
 
 }  // namespace
 
-ClientHandler* ClientHandler::GetInstance()
+CefRefPtr<ClientHandler> ClientHandler::GetInstance()
 {
 	return g_instance;
 }
@@ -151,7 +152,7 @@ void ClientHandler::load(WebContainer_Load_Req* pLoadInfo)
 		window_info.SetAsChild((HWND)pLoadInfo->hWnd, rcBrowser);
 
 		// Create the first browser window.
-		CefRefPtr<CefBrowser> b = CefBrowserHost::CreateBrowserSync(window_info, this, pLoadInfo->szUrl, browser_settings, NULL);
+		CefRefPtr<CefBrowser> b = CefBrowserHost::CreateBrowserSync(window_info, GetInstance(), pLoadInfo->szUrl, browser_settings, NULL);
 		if (b)
 		{
 			browser_map_.insert(std::make_pair(pLoadInfo->hWnd,

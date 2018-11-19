@@ -14,7 +14,7 @@ class ClientHandler : public CefClient,
 public:
 	ClientHandler();
 	~ClientHandler();
-	static ClientHandler* GetInstance();
+	static CefRefPtr<ClientHandler> GetInstance();
 
 	int ExecuteLoadOnUIThread(WebContainer_Load_Req* pLoadInfo);
 	int ExecuteCallJsOnUIThread(WebContainer_CallJs_Req* pCallInfo);
