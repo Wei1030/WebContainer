@@ -44,8 +44,7 @@ int ClientHandler::ExecuteCallJsOnUIThread(WebContainer_CallJs_Req* pCallInfo)
 }
 
 ClientHandler::ClientHandler() 
-{
-	g_instance = this;
+{	
 }
 
 
